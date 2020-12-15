@@ -40,12 +40,12 @@ public class TankFrame extends Frame {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			
+			System.out.println("keyPressed...");
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			
+			System.out.println("keyRelased...");
 		}
 		
 		
