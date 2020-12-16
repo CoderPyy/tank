@@ -15,9 +15,9 @@ public class TankFrame extends Frame {
 		setResizable(false);
 		setTitle("tank war");
 		setVisible(true);
-		
+
 		this.addKeyListener(new MyKeyListener());
-		
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -26,17 +26,16 @@ public class TankFrame extends Frame {
 		});
 
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		System.out.println("paint.....");
 		g.fillRect(x, y, 50, 50);
-		x+=10;
-		y+=10;
+		x += 10;
+		y += 10;
 	}
-	
-	
-	class MyKeyListener extends KeyAdapter{
+
+	class MyKeyListener extends KeyAdapter {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
@@ -49,8 +48,7 @@ public class TankFrame extends Frame {
 			System.out.println("keyRelased...");
 			System.out.println("++++++++++++++++++++++");
 		}
-		
-		
+
 	}
 
 }
