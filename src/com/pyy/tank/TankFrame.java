@@ -1,19 +1,29 @@
 package com.pyy.tank;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import sun.awt.image.OffScreenImage;
+
+/**
+ * 坦克窗体类
+ * 
+ * @author PeiYY Last_update:2020年12月17日上午11:44:49
+ */
 public class TankFrame extends Frame {
-	
-	Tank tank=new Tank(200,200,Dir.DOWN);
-	Bullet bullet=new Bullet(200,210,Dir.DOWN);
+
+	Tank tank = new Tank(200, 200, Dir.DOWN);
+	Bullet bullet = new Bullet(200, 210, Dir.DOWN);
+	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 	public TankFrame() {
-		setSize(800, 600);
+		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setResizable(false);
 		setTitle("tank war");
 		setVisible(true);
@@ -27,6 +37,22 @@ public class TankFrame extends Frame {
 			}
 		});
 
+	}
+	
+	//解决屏幕一闪一闪的问题，定义一个和页面一样大的图片，每次将图片一次性加载到内存中
+	Image offScreenImage=null;
+	@Override
+	public void update(Graphics g) {
+		if(offScreenImage==null) {
+			offScreenImage=this.createImage(GAME_WIDTH, GAME_HEIGHT);
+		}
+		Graphics gOffScreen=offScreenImage.getGraphics();
+		Color color=gOffScreen.getColor();
+		gOffScreen.setColor(Color.BLACK);
+		gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		gOffScreen.setColor(color);
+		paint(gOffScreen);
+		g.drawImage(offScreenImage, 0, 0, null);
 	}
 
 	@Override
@@ -59,10 +85,13 @@ public class TankFrame extends Frame {
 			case KeyEvent.VK_DOWN:
 				bD = true;
 				break;
+			case KeyEvent.VK_ESCAPE:
+				System.exit(0);
+				break;
 			default:
 				break;
 			}
-			
+
 			setMainTankDir();
 		}
 
@@ -86,29 +115,30 @@ public class TankFrame extends Frame {
 			default:
 				break;
 			}
-			
+
 			setMainTankDir();
-			
+
 		}
-		
+
 		private void setMainTankDir() {
 
-			if(!bL && !bR && !bU && !bD) {//没有按住上下左右键，设置坦克静止
+			if (!bL && !bR && !bU && !bD) {// 没有按住上下左右键，设置坦克静止
 				tank.setMoving(false);
-			}else {
-				tank.setMoving(true);//设置坦克移动
-				
-				if(bL) tank.setDir(Dir.LEFT);
-				if(bR) tank.setDir(Dir.RIGHT);
-				if(bU) tank.setDir(Dir.UP);
-				if(bD) tank.setDir(Dir.DOWN);
+			} else {
+				tank.setMoving(true);// 设置坦克移动
+
+				if (bL)
+					tank.setDir(Dir.LEFT);
+				if (bR)
+					tank.setDir(Dir.RIGHT);
+				if (bU)
+					tank.setDir(Dir.UP);
+				if (bD)
+					tank.setDir(Dir.DOWN);
 			}
-			
+
 		}
 
-		
 	}
-	
-	
 
 }

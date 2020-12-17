@@ -3,45 +3,49 @@ package com.pyy.tank;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * 子弹类
+ * 
+ * @author PeiYY Last_update:2020年12月17日上午11:44:26
+ */
 public class Bullet {
-	private static final int SPEED=10;
-	private int x,y;
+	private static final int SPEED = 10;
+	private int x, y;
 	private Dir dir;
-	private static final int WIDTH=10,HEIGHT=10;
-	
-	public Bullet(int x,int y,Dir dir) {
-		this.x=x;
-		this.y=y;
-		this.dir=dir;
+	private static final int WIDTH = 10, HEIGHT = 10;
+
+	public Bullet(int x, int y, Dir dir) {
+		this.x = x;
+		this.y = y;
+		this.dir = dir;
 	}
-	
+
 	public void paint(Graphics g) {
-		Color c=g.getColor();
+		Color c = g.getColor();
 		g.setColor(Color.RED);
 		g.fillOval(x, y, WIDTH, HEIGHT);
 		g.setColor(c);
 		move();
 	}
-	
+
 	private void move() {
-		switch(dir) {
+		switch (dir) {
 		case LEFT:
-			x-=SPEED;
+			x -= SPEED;
 			break;
 		case RIGHT:
-			x+=SPEED;
+			x += SPEED;
 			break;
 		case UP:
-			y-=SPEED;
+			y -= SPEED;
 			break;
 		case DOWN:
-			y+=SPEED;
+			y += SPEED;
 			break;
 		default:
 			break;
 		}
-		
-	}
 
+	}
 
 }
