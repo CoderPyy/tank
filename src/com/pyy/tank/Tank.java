@@ -91,7 +91,7 @@ public class Tank {
 	 * Last_update:2020年12月17日下午2:32:44
 	 */
 	public void fire() {
-		this.tFrame.bullet = new Bullet(this.x, this.y, this.dir);// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
+		this.tFrame.bullets.add(new Bullet(this.x, this.y, this.dir, this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
 	}
 
 }

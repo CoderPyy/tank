@@ -8,6 +8,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 坦克窗体类
@@ -17,7 +19,8 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
 	Tank tank = new Tank(200, 200, Dir.DOWN, this);
-	Bullet bullet = new Bullet(200, 210, Dir.DOWN);
+	List<Bullet> bullets = new CopyOnWriteArrayList<Bullet>();
+
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 	public TankFrame() {
@@ -56,8 +59,14 @@ public class TankFrame extends Frame {
 
 	@Override
 	public void paint(Graphics g) {
+		Color color = g.getColor();
+		g.setColor(Color.white);
+		g.drawString("子弹的数量：" + bullets.size(), 10, 60);
+		g.setColor(color);
 		tank.paint(g);
-		bullet.paint(g);
+		bullets.forEach(item -> {
+			item.paint(g);
+		});
 	}
 
 	class MyKeyListener extends KeyAdapter {
