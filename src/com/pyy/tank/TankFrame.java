@@ -8,7 +8,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
-	int x = 200, y = 200;
+	
+	Tank tank=new Tank(200,200,Dir.DOWN);
+	Bullet bullet=new Bullet(200,210,Dir.DOWN);
 
 	public TankFrame() {
 		setSize(800, 600);
@@ -29,10 +31,8 @@ public class TankFrame extends Frame {
 
 	@Override
 	public void paint(Graphics g) {
-		g.fillRect(x, y, 50, 50);
-//		x += 10;
-//		y += 10;
-		
+		tank.paint(g);
+		bullet.paint(g);
 	}
 
 	class MyKeyListener extends KeyAdapter {
@@ -48,24 +48,22 @@ public class TankFrame extends Frame {
 			int key = e.getKeyCode();
 			switch (key) {
 			case KeyEvent.VK_LEFT:
-//				x -= 10;
 				bL = true;
 				break;
 			case KeyEvent.VK_RIGHT:
-//				x += 10;
 				bR = true;
 				break;
 			case KeyEvent.VK_UP:
-//				y -= 10;
 				bU = true;
 				break;
 			case KeyEvent.VK_DOWN:
-//				y += 10;
 				bD = true;
 				break;
 			default:
 				break;
 			}
+			
+			setMainTankDir();
 		}
 
 		@Override
@@ -74,26 +72,43 @@ public class TankFrame extends Frame {
 			int key = e.getKeyCode();
 			switch (key) {
 			case KeyEvent.VK_LEFT:
-//				x -= 10;
 				bL = false;
 				break;
 			case KeyEvent.VK_RIGHT:
-//				x += 10;
 				bR = false;
 				break;
 			case KeyEvent.VK_UP:
-//				y -= 10;
 				bU = false;
 				break;
 			case KeyEvent.VK_DOWN:
-//				y += 10;
 				bD = false;
 				break;
 			default:
 				break;
 			}
+			
+			setMainTankDir();
+			
+		}
+		
+		private void setMainTankDir() {
+
+			if(!bL && !bR && !bU && !bD) {//没有按住上下左右键，设置坦克静止
+				tank.setMoving(false);
+			}else {
+				tank.setMoving(true);//设置坦克移动
+				
+				if(bL) tank.setDir(Dir.LEFT);
+				if(bR) tank.setDir(Dir.RIGHT);
+				if(bU) tank.setDir(Dir.UP);
+				if(bD) tank.setDir(Dir.DOWN);
+			}
+			
 		}
 
+		
 	}
+	
+	
 
 }
