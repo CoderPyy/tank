@@ -9,8 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import sun.awt.image.OffScreenImage;
-
 /**
  * 坦克窗体类
  * 
@@ -18,7 +16,7 @@ import sun.awt.image.OffScreenImage;
  */
 public class TankFrame extends Frame {
 
-	Tank tank = new Tank(200, 200, Dir.DOWN);
+	Tank tank = new Tank(200, 200, Dir.DOWN, this);
 	Bullet bullet = new Bullet(200, 210, Dir.DOWN);
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
@@ -38,16 +36,17 @@ public class TankFrame extends Frame {
 		});
 
 	}
-	
-	//解决屏幕一闪一闪的问题，定义一个和页面一样大的图片，每次将图片一次性加载到内存中
-	Image offScreenImage=null;
+
+	// 解决屏幕一闪一闪的问题，定义一个和页面一样大的图片，每次将图片一次性加载到内存中
+	Image offScreenImage = null;
+
 	@Override
 	public void update(Graphics g) {
-		if(offScreenImage==null) {
-			offScreenImage=this.createImage(GAME_WIDTH, GAME_HEIGHT);
+		if (offScreenImage == null) {
+			offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
 		}
-		Graphics gOffScreen=offScreenImage.getGraphics();
-		Color color=gOffScreen.getColor();
+		Graphics gOffScreen = offScreenImage.getGraphics();
+		Color color = gOffScreen.getColor();
 		gOffScreen.setColor(Color.BLACK);
 		gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 		gOffScreen.setColor(color);
@@ -87,6 +86,9 @@ public class TankFrame extends Frame {
 				break;
 			case KeyEvent.VK_ESCAPE:
 				System.exit(0);
+				break;
+			case KeyEvent.VK_CONTROL:
+				tank.fire();
 				break;
 			default:
 				break;
