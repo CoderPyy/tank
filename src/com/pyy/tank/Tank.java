@@ -1,6 +1,5 @@
 package com.pyy.tank;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -13,6 +12,10 @@ public class Tank {
 	private int x, y;
 	private Dir dir = Dir.DOWN;
 	private static final int SPEED = 5;
+	
+	public static int WIDTH=ResourceMgr.tankD.getWidth();
+	public static int HEIGHT=ResourceMgr.tankD.getHeight();
+	
 	private Boolean moving = false;
 	private TankFrame tFrame;// 坦克类里面引用坦克窗体对象
 
@@ -105,7 +108,10 @@ public class Tank {
 	 * Last_update:2020年12月17日下午2:32:44
 	 */
 	public void fire() {
-		this.tFrame.bullets.add(new Bullet(this.x + 11, this.y + 11, this.dir, this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
+		//todo 子弹的计算需要优化
+		int bulletX=this.x+Tank.WIDTH/2-Bullet.WIDTH/2;//计算子弹的x
+		int bulletY=this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;//计算子弹的y
+		this.tFrame.bullets.add(new Bullet(bulletX, bulletY, this.dir, this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
 	}
 
 }
