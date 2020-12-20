@@ -12,12 +12,13 @@ public class Tank {
 	private int x, y;
 	private Dir dir = Dir.DOWN;
 	private static final int SPEED = 5;
-	
-	public static int WIDTH=ResourceMgr.tankD.getWidth();
-	public static int HEIGHT=ResourceMgr.tankD.getHeight();
-	
+
+	public static int WIDTH = ResourceMgr.tankD.getWidth();
+	public static int HEIGHT = ResourceMgr.tankD.getHeight();
+
 	private Boolean moving = false;
 	private TankFrame tFrame;// 坦克类里面引用坦克窗体对象
+	private Boolean living=true;
 
 	public Tank(int x, int y, Dir dir, TankFrame tFrame) {
 		this.x = x;
@@ -57,9 +58,20 @@ public class Tank {
 	public Boolean getMoving() {
 		return moving;
 	}
+	
+	public Boolean getLiving() {
+		return living;
+	}
+
+	public void setLiving(Boolean living) {
+		this.living = living;
+	}
 
 	public void paint(Graphics g) {
-		//根据坦克的方向，换坦克的图片
+		if(!this.living) {
+			this.tFrame.enemyTanks.remove(this);
+		}
+		// 根据坦克的方向，换坦克的图片
 		switch (dir) {
 		case LEFT:
 			g.drawImage(ResourceMgr.tankL, x, y, null);
@@ -76,12 +88,12 @@ public class Tank {
 		default:
 			break;
 		}
-		
+
 		move();
 	}
 
 	private void move() {
-		if (!moving)
+		if (!this.moving)
 			return;
 		switch (dir) {
 		case LEFT:
@@ -108,10 +120,19 @@ public class Tank {
 	 * Last_update:2020年12月17日下午2:32:44
 	 */
 	public void fire() {
-		//todo 子弹的计算需要优化
-		int bulletX=this.x+Tank.WIDTH/2-Bullet.WIDTH/2;//计算子弹的x
-		int bulletY=this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;//计算子弹的y
+		// todo 子弹的计算需要优化
+		int bulletX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;// 计算子弹的x
+		int bulletY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;// 计算子弹的y
 		this.tFrame.bullets.add(new Bullet(bulletX, bulletY, this.dir, this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
+	}
+
+	/**
+	 * 坦克死亡
+	 * 
+	 * Last_update:2020年12月20日下午2:55:37
+	 */
+	public void die() {
+		this.setLiving(false);
 	}
 
 }

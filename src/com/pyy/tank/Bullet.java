@@ -1,7 +1,7 @@
 package com.pyy.tank;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  * 子弹类
@@ -10,15 +10,15 @@ import java.awt.Graphics;
  */
 public class Bullet {
 	private static final int SPEED = 10;
-	
-	public static int WIDTH=ResourceMgr.bulletD.getWidth();
-	public static int HEIGHT=ResourceMgr.bulletD.getHeight();
+
+	public static int WIDTH = ResourceMgr.bulletD.getWidth();
+	public static int HEIGHT = ResourceMgr.bulletD.getHeight();
 
 	private int x, y;
 	private Dir dir;
 
 	private TankFrame tFrame = null;// 窗体对象的引用
-	private boolean live = true;// 子弹是否超出边界
+	private boolean living = true;// 子弹是否超出边界
 
 	public Bullet(int x, int y, Dir dir, TankFrame tFrame) {
 		this.x = x;
@@ -28,8 +28,8 @@ public class Bullet {
 	}
 
 	public void paint(Graphics g) {
-		if (!this.live) {
-			tFrame.bullets.remove(this);
+		if (!this.living) {
+			this.tFrame.bullets.remove(this);
 		}
 		/*
 		 * Color c = g.getColor(); g.setColor(Color.RED); g.fillOval(x, y, WIDTH,
@@ -74,9 +74,30 @@ public class Bullet {
 
 		// 子弹跟自身重合或者飞出边界，就应该消失了
 		if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
-			this.live = false;
+			this.living = false;
 		}
 
+	}
+
+	/**
+	 * 子弹和敌方坦克碰撞检测 Last_update:2020年12月20日下午2:46:12
+	 * 
+	 * @param enemyTank
+	 */
+	public void collideWith(Tank enemyTank) {
+		Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// 子弹的矩形
+		Rectangle tankRect = new Rectangle(enemyTank.getX(), enemyTank.getY(), enemyTank.WIDTH, enemyTank.HEIGHT);// 坦克的矩形
+		if (bulletRect.intersects(tankRect)) {
+			this.die();
+			enemyTank.die();
+		}
+	}
+
+	/**
+	 * 子弹死亡 Last_update:2020年12月20日下午3:34:21
+	 */
+	private void die() {
+		this.living = false;
 	}
 
 }

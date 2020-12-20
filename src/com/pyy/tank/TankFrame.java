@@ -18,10 +18,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class TankFrame extends Frame {
 
-	Tank tank = new Tank(200, 500, Dir.UP, this);
+	Tank tank = new Tank(200, 500, Dir.DOWN, this);
 	List<Bullet> bullets = new CopyOnWriteArrayList<Bullet>();
-	List<Tank> enemyTanks=new CopyOnWriteArrayList<Tank>();
-	
+	List<Tank> enemyTanks = new CopyOnWriteArrayList<Tank>();
+
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 	public TankFrame() {
@@ -62,14 +62,21 @@ public class TankFrame extends Frame {
 	public void paint(Graphics g) {
 		Color color = g.getColor();
 		g.setColor(Color.white);
-		g.drawString("子弹的数量：" + bullets.size(), 10, 60);
+		g.drawString("子弹的数量：" + this.bullets.size(), 10, 60);
+		g.drawString("坦克的数量：" + this.enemyTanks.size(), 10, 80);
 		g.setColor(color);
 		tank.paint(g);
-		enemyTanks.forEach(item->{
+		enemyTanks.forEach(item -> {
 			item.paint(g);
 		});
 		bullets.forEach(item -> {
 			item.paint(g);
+		});
+		// 碰撞检测，子弹打到敌方坦克，子弹和敌方坦克一起灭亡
+		bullets.forEach(bullet -> {
+			enemyTanks.forEach(enemyTank -> {
+				bullet.collideWith(enemyTank);
+			});
 		});
 	}
 
