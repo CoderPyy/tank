@@ -139,6 +139,8 @@ public class Tank {
 		int bulletX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;// 计算子弹的x
 		int bulletY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;// 计算子弹的y
 		this.tFrame.bullets.add(new Bullet(bulletX, bulletY, this.dir, this.group,this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
+		//播放我方坦克的声音
+//		if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
 	}
 
 	/**
