@@ -21,7 +21,8 @@ public class TankFrame extends Frame {
 	Tank tank = new Tank(200, 500, Dir.DOWN,Group.GOOD, this);
 	List<Bullet> bullets = new CopyOnWriteArrayList<Bullet>();
 	List<Tank> enemyTanks = new CopyOnWriteArrayList<Tank>();
-
+	Explode e=new Explode(200,300,this);
+	
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 	public TankFrame() {
@@ -78,6 +79,7 @@ public class TankFrame extends Frame {
 				bullet.collideWith(enemyTank);
 			});
 		});
+		e.paint(g);
 	}
 
 	class MyKeyListener extends KeyAdapter {
