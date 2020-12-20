@@ -19,22 +19,30 @@ public class Bullet {
 
 	private TankFrame tFrame = null;// 窗体对象的引用
 	private boolean living = true;// 子弹是否超出边界
+	
+	private Group group=Group.BAD;
 
-	public Bullet(int x, int y, Dir dir, TankFrame tFrame) {
+	public Bullet(int x, int y, Dir dir, Group group,TankFrame tFrame) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
+		this.group=group;
 		this.tFrame = tFrame;
+	}
+	
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	public void paint(Graphics g) {
 		if (!this.living) {
 			this.tFrame.bullets.remove(this);
 		}
-		/*
-		 * Color c = g.getColor(); g.setColor(Color.RED); g.fillOval(x, y, WIDTH,
-		 * HEIGHT); g.setColor(c);
-		 */
+
 		switch (dir) {
 		case LEFT:
 			g.drawImage(ResourceMgr.bulletL, x, y, null);
@@ -85,6 +93,9 @@ public class Bullet {
 	 * @param enemyTank
 	 */
 	public void collideWith(Tank enemyTank) {
+		if(this.group==enemyTank.getGroup()) return;//如果坦克和子弹是属于一方的，那就不需要碰撞检测（默认不开启队友伤害）
+		
+		//TODO:用一个rect来记录子弹的位置，减少不必要的内存消耗
 		Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// 子弹的矩形
 		Rectangle tankRect = new Rectangle(enemyTank.getX(), enemyTank.getY(), enemyTank.WIDTH, enemyTank.HEIGHT);// 坦克的矩形
 		if (bulletRect.intersects(tankRect)) {

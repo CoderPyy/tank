@@ -1,6 +1,7 @@
 package com.pyy.tank;
 
 import java.awt.Graphics;
+import java.util.Random;
 
 /**
  * 坦克类
@@ -11,19 +12,23 @@ public class Tank {
 
 	private int x, y;
 	private Dir dir = Dir.DOWN;
-	private static final int SPEED = 5;
+	private static final int SPEED = 1;
 
 	public static int WIDTH = ResourceMgr.tankD.getWidth();
 	public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
-	private Boolean moving = false;
+	private Boolean moving = true;
 	private TankFrame tFrame;// 坦克类里面引用坦克窗体对象
 	private Boolean living=true;
+	
+	private Group group=Group.BAD;
+	private Random random=new Random();
 
-	public Tank(int x, int y, Dir dir, TankFrame tFrame) {
+	public Tank(int x, int y, Dir dir, Group group,TankFrame tFrame) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
+		this.group=group;
 		this.tFrame = tFrame;
 	}
 
@@ -65,6 +70,14 @@ public class Tank {
 
 	public void setLiving(Boolean living) {
 		this.living = living;
+	}
+	
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	public void paint(Graphics g) {
@@ -111,6 +124,8 @@ public class Tank {
 		default:
 			break;
 		}
+		
+		if(random.nextInt(10)>5) this.fire();//随机数10以内，大于5，开火
 
 	}
 
@@ -123,7 +138,7 @@ public class Tank {
 		// todo 子弹的计算需要优化
 		int bulletX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;// 计算子弹的x
 		int bulletY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;// 计算子弹的y
-		this.tFrame.bullets.add(new Bullet(bulletX, bulletY, this.dir, this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
+		this.tFrame.bullets.add(new Bullet(bulletX, bulletY, this.dir, this.group,this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
 	}
 
 	/**

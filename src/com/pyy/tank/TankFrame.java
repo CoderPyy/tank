@@ -18,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class TankFrame extends Frame {
 
-	Tank tank = new Tank(200, 500, Dir.DOWN, this);
+	Tank tank = new Tank(200, 500, Dir.DOWN,Group.GOOD, this);
 	List<Bullet> bullets = new CopyOnWriteArrayList<Bullet>();
 	List<Tank> enemyTanks = new CopyOnWriteArrayList<Tank>();
 
