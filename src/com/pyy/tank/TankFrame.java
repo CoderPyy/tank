@@ -18,9 +18,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class TankFrame extends Frame {
 
-	Tank tank = new Tank(200, 200, Dir.DOWN, this);
+	Tank tank = new Tank(200, 500, Dir.UP, this);
 	List<Bullet> bullets = new CopyOnWriteArrayList<Bullet>();
-
+	List<Tank> enemyTanks=new CopyOnWriteArrayList<Tank>();
+	
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 	public TankFrame() {
@@ -64,6 +65,9 @@ public class TankFrame extends Frame {
 		g.drawString("子弹的数量：" + bullets.size(), 10, 60);
 		g.setColor(color);
 		tank.paint(g);
+		enemyTanks.forEach(item->{
+			item.paint(g);
+		});
 		bullets.forEach(item -> {
 			item.paint(g);
 		});
