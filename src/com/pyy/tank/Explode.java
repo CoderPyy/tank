@@ -24,7 +24,7 @@ public class Explode {
 		this.y = y;
 		this.tFrame = tFrame;
 		
-		new Audio("audio/explode.wav").play();;
+//		new Audio("audio/explode.wav").play();
 	}
 	
 	public void paint(Graphics g) {

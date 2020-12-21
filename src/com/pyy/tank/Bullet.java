@@ -19,17 +19,25 @@ public class Bullet {
 
 	private TankFrame tFrame = null;// 窗体对象的引用
 	private boolean living = true;// 子弹是否超出边界
-	
-	private Group group=Group.BAD;
 
-	public Bullet(int x, int y, Dir dir, Group group,TankFrame tFrame) {
+	private Group group = Group.BAD;
+
+	private Rectangle bulletRect = new Rectangle();// 子弹的矩形（单例模式）
+
+	public Bullet(int x, int y, Dir dir, Group group, TankFrame tFrame) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
-		this.group=group;
+		this.group = group;
 		this.tFrame = tFrame;
+
+		bulletRect.x = this.x;
+		bulletRect.y = this.y;
+		bulletRect.width = WIDTH;
+		bulletRect.height = HEIGHT;
+
 	}
-	
+
 	public Group getGroup() {
 		return group;
 	}
@@ -80,6 +88,10 @@ public class Bullet {
 			break;
 		}
 
+		// update rect
+		bulletRect.x = this.x;
+		bulletRect.y = this.y;
+
 		// 子弹跟自身重合或者飞出边界，就应该消失了
 		if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
 			this.living = false;
@@ -93,12 +105,13 @@ public class Bullet {
 	 * @param enemyTank
 	 */
 	public void collideWith(Tank enemyTank) {
-		if(this.group==enemyTank.getGroup()) return;//如果坦克和子弹是属于一方的，那就不需要碰撞检测（默认不开启队友伤害）
-		
-		//TODO:用一个rect来记录子弹的位置，减少不必要的内存消耗
-		Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// 子弹的矩形
-		Rectangle tankRect = new Rectangle(enemyTank.getX(), enemyTank.getY(), enemyTank.WIDTH, enemyTank.HEIGHT);// 坦克的矩形
-		if (bulletRect.intersects(tankRect)) {
+		if (this.group == enemyTank.getGroup())
+			return;// 如果坦克和子弹是属于一方的，那就不需要碰撞检测（默认不开启队友伤害）
+
+		// TODO:用一个rect来记录子弹的位置，减少不必要的内存消耗
+//		Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// 子弹的矩形
+//		Rectangle tankRect = new Rectangle(enemyTank.getX(), enemyTank.getY(), enemyTank.WIDTH, enemyTank.HEIGHT);// 坦克的矩形
+		if (bulletRect.intersects(enemyTank.tankRect)) {
 			this.die();
 			enemyTank.die();
 			int eX = enemyTank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;// 计算爆炸的x

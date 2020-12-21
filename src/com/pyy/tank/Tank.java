@@ -1,6 +1,7 @@
 package com.pyy.tank;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Random;
 
 /**
@@ -12,17 +13,19 @@ public class Tank {
 
 	private int x, y;
 	private Dir dir = Dir.UP;
-	private static final int SPEED = 2 ;
+	private static final int SPEED = 5;
 
 	public static int WIDTH = ResourceMgr.tankD.getWidth();
 	public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
-	private Boolean moving = true;
+	private Boolean moving;
 	private TankFrame tFrame;// 坦克类里面引用坦克窗体对象
 	private Boolean living=true;
 	
 	private Group group=Group.BAD;
 	private Random random=new Random();
+	
+	Rectangle tankRect = new Rectangle();// 坦克的矩形（单例模式）
 
 	public Tank(int x, int y, Dir dir,Boolean moving, Group group,TankFrame tFrame) {
 		this.x = x;
@@ -31,6 +34,11 @@ public class Tank {
 		this.moving=moving;
 		this.group=group;
 		this.tFrame = tFrame;
+		
+		tankRect.x=this.x;
+		tankRect.y=this.y;
+		tankRect.width=WIDTH;
+		tankRect.height=HEIGHT;
 	}
 
 	public int getX() {
@@ -148,14 +156,37 @@ public class Tank {
 			break;
 		}
 		
+		
+		
+		//播放我方坦克移动的声音
+//		if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_move.wav").play()).start();
+		
 		if(this.group==Group.BAD&&random.nextInt(100)>95) this.fire();//随机数100以内，大于95，敌方坦克开火
 		
 		if(this.group==Group.BAD&&random.nextInt(100)>95) this.radomDir();//随机数100以内，大于95，敌方坦克移动
 
+		//边界检测
+		boundsCheck();
+		
+		//update rect
+		tankRect.x=this.x;
+		tankRect.y=this.y;
+	}
+	
+	
+	/**
+	 *   边界移动检测
+	 * Last_update:2020年12月21日下午11:00:52
+	 */
+	private void boundsCheck() {
+		if(this.x<2) x=2;
+		if(this.y<28) y=28;
+		if(this.x>TankFrame.GAME_WIDTH-Tank.WIDTH) x=TankFrame.GAME_WIDTH-Tank.WIDTH-2;
+		if(this.y>TankFrame.GAME_HEIGHT-Tank.HEIGHT) y=TankFrame.GAME_HEIGHT-Tank.HEIGHT-2;
 	}
 
 	/**
-	 * 随机移动换方向
+	 *   随机移动换方向
 	 * Last_update:2020年12月21日下午9:48:12
 	 */
 	private void radomDir() {
@@ -172,7 +203,7 @@ public class Tank {
 		int bulletX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;// 计算子弹的x
 		int bulletY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;// 计算子弹的y
 		this.tFrame.bullets.add(new Bullet(bulletX, bulletY, this.dir, this.group,this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
-		//播放我方坦克的声音
+		//播放我方坦克开火的声音
 //		if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
 	}
 
