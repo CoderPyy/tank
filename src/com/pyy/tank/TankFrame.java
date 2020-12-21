@@ -96,7 +96,6 @@ public class TankFrame extends Frame {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			System.out.println("keyPressed...");
 			int key = e.getKeyCode();
 			switch (key) {
 			case KeyEvent.VK_LEFT:
@@ -126,7 +125,6 @@ public class TankFrame extends Frame {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			System.out.println("keyRelased...");
 			int key = e.getKeyCode();
 			switch (key) {
 			case KeyEvent.VK_LEFT:

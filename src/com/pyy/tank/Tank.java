@@ -86,22 +86,44 @@ public class Tank {
 			this.tFrame.enemyTanks.remove(this);
 		}
 		// 根据坦克的方向，换坦克的图片
-		switch (dir) {
-		case LEFT:
-			g.drawImage(ResourceMgr.tankL, x, y, null);
-			break;
-		case RIGHT:
-			g.drawImage(ResourceMgr.tankR, x, y, null);
-			break;
-		case UP:
-			g.drawImage(ResourceMgr.tankU, x, y, null);
-			break;
-		case DOWN:
-			g.drawImage(ResourceMgr.tankD, x, y, null);
-			break;
-		default:
-			break;
+		if(this.group==Group.BAD) {
+			switch (dir) {
+			case LEFT:
+				g.drawImage(ResourceMgr.tankL, x, y, null);
+				break;
+			case RIGHT:
+				g.drawImage(ResourceMgr.tankR, x, y, null);
+				break;
+			case UP:
+				g.drawImage(ResourceMgr.tankU, x, y, null);
+				break;
+			case DOWN:
+				g.drawImage(ResourceMgr.tankD, x, y, null);
+				break;
+			default:
+				break;
+			}
 		}
+		
+		if(this.group==Group.GOOD) {
+			switch (dir) {
+			case LEFT:
+				g.drawImage(ResourceMgr.tankGL, x, y, null);
+				break;
+			case RIGHT:
+				g.drawImage(ResourceMgr.tankGR, x, y, null);
+				break;
+			case UP:
+				g.drawImage(ResourceMgr.tankGU, x, y, null);
+				break;
+			case DOWN:
+				g.drawImage(ResourceMgr.tankGD, x, y, null);
+				break;
+			default:
+				break;
+			}
+		}
+		
 		
 		move();
 	}
@@ -146,7 +168,7 @@ public class Tank {
 	 * Last_update:2020年12月17日下午2:32:44
 	 */
 	public void fire() {
-		// todo 子弹的计算需要优化
+		// TODO: 子弹的计算需要优化
 		int bulletX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;// 计算子弹的x
 		int bulletY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;// 计算子弹的y
 		this.tFrame.bullets.add(new Bullet(bulletX, bulletY, this.dir, this.group,this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹

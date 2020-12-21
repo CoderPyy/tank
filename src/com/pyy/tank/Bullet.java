@@ -101,7 +101,9 @@ public class Bullet {
 		if (bulletRect.intersects(tankRect)) {
 			this.die();
 			enemyTank.die();
-			this.tFrame.explodes.add(new Explode(x, y, tFrame));
+			int eX = enemyTank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;// 计算爆炸的x
+			int eY = enemyTank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;// 计算爆炸的y
+			this.tFrame.explodes.add(new Explode(eX, eY, tFrame));
 		}
 	}
 
