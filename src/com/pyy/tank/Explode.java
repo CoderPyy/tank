@@ -16,7 +16,6 @@ public class Explode {
 	private int x, y;
 
 	private TankFrame tFrame = null;// 窗体对象的引用
-	private boolean living = true;// 子弹是否超出边界
 	
 	private int step=0;
 	
@@ -25,13 +24,13 @@ public class Explode {
 		this.y = y;
 		this.tFrame = tFrame;
 		
-		new  Audio("audio/explode.wav").play();;
+		new Audio("audio/explode.wav").play();;
 	}
 	
 	public void paint(Graphics g) {
 		g.drawImage(ResourceMgr.explodes[step++], x, y, null);
 		
-		if(step>=ResourceMgr.explodes.length) step=0;
+		if(step>=ResourceMgr.explodes.length) tFrame.explodes.remove(this);;
 	}
 	
 

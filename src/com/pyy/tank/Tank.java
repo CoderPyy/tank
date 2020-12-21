@@ -11,8 +11,8 @@ import java.util.Random;
 public class Tank {
 
 	private int x, y;
-	private Dir dir = Dir.DOWN;
-	private static final int SPEED = 1;
+	private Dir dir = Dir.UP;
+	private static final int SPEED = 2 ;
 
 	public static int WIDTH = ResourceMgr.tankD.getWidth();
 	public static int HEIGHT = ResourceMgr.tankD.getHeight();
@@ -24,10 +24,11 @@ public class Tank {
 	private Group group=Group.BAD;
 	private Random random=new Random();
 
-	public Tank(int x, int y, Dir dir, Group group,TankFrame tFrame) {
+	public Tank(int x, int y, Dir dir,Boolean moving, Group group,TankFrame tFrame) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
+		this.moving=moving;
 		this.group=group;
 		this.tFrame = tFrame;
 	}
@@ -101,7 +102,7 @@ public class Tank {
 		default:
 			break;
 		}
-
+		
 		move();
 	}
 
@@ -125,8 +126,18 @@ public class Tank {
 			break;
 		}
 		
-		if(random.nextInt(10)>5) this.fire();//随机数10以内，大于5，开火
+		if(this.group==Group.BAD&&random.nextInt(100)>95) this.fire();//随机数100以内，大于95，敌方坦克开火
+		
+		if(this.group==Group.BAD&&random.nextInt(100)>95) this.radomDir();//随机数100以内，大于95，敌方坦克移动
 
+	}
+
+	/**
+	 * 随机移动换方向
+	 * Last_update:2020年12月21日下午9:48:12
+	 */
+	private void radomDir() {
+		this.dir=Dir.values()[random.nextInt(4)];
 	}
 
 	/**

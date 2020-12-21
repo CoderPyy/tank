@@ -101,6 +101,7 @@ public class Bullet {
 		if (bulletRect.intersects(tankRect)) {
 			this.die();
 			enemyTank.die();
+			this.tFrame.explodes.add(new Explode(x, y, tFrame));
 		}
 	}
 

@@ -12,11 +12,11 @@ public class Main {
 
 		// 初始化敌方坦克
 		for (int i = 0; i < 5; i++) {
-			tf.enemyTanks.add(new Tank(50 + i * 80, 200, Dir.DOWN,Group.BAD, tf));
+			tf.enemyTanks.add(new Tank(50 + i * 80, 200, Dir.DOWN,true,Group.BAD, tf));
 		}
 		
 		//music
-//		new Thread(()->new Audio("audio/war1.wav").loop()).start();
+		new Thread(()->new Audio("audio/war1.wav").loop()).start();
 
 		while (true) {
 			Thread.sleep(50);
