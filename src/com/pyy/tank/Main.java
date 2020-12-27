@@ -8,10 +8,13 @@ package com.pyy.tank;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
+		
+		int tankCount = PropertyMgr.getInt("initTankCount");
+		
 		TankFrame tf = new TankFrame();
 
 		// 初始化敌方坦克
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < tankCount; i++) {
 			tf.enemyTanks.add(new Tank(50 + i * 80, 200, Dir.DOWN,true,Group.BAD, tf));
 		}
 		
@@ -24,5 +27,4 @@ public class Main {
 			tf.repaint();
 		}
 	}
-
 }

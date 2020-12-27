@@ -41,6 +41,17 @@ public class TankFrame extends Frame {
 		});
 
 	}
+	
+
+	public List<Bullet> getBullets() {
+		return bullets;
+	}
+
+	public void setBullets(List<Bullet> bullets) {
+		this.bullets = bullets;
+	}
+
+
 
 	// 解决屏幕一闪一闪的问题，定义一个和页面一样大的图片，每次将图片一次性加载到内存中
 	Image offScreenImage = null;

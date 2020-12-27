@@ -35,6 +35,9 @@ public class Bullet {
 		bulletRect.y = this.y;
 		bulletRect.width = WIDTH;
 		bulletRect.height = HEIGHT;
+		
+		//窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
+		tFrame.bullets.add(this);
 
 	}
 

@@ -4,6 +4,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
+import com.pyy.tank.strategy.DefaultFireStrategy;
+import com.pyy.tank.strategy.FireStrategy;
+import com.pyy.tank.strategy.FourDirFireStrategy;
+
 /**
  * 坦克类
  * 
@@ -26,6 +30,8 @@ public class Tank {
 	private Random random=new Random();
 	
 	Rectangle tankRect = new Rectangle();// 坦克的矩形（单例模式）
+	
+	FireStrategy strategy;
 
 	public Tank(int x, int y, Dir dir,Boolean moving, Group group,TankFrame tFrame) {
 		this.x = x;
@@ -39,6 +45,9 @@ public class Tank {
 		tankRect.y=this.y;
 		tankRect.width=WIDTH;
 		tankRect.height=HEIGHT;
+		
+		if(this.group==Group.GOOD) strategy=new FourDirFireStrategy();
+		else strategy=new DefaultFireStrategy();
 	}
 
 	public int getX() {
@@ -87,6 +96,14 @@ public class Tank {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+	
+	public TankFrame gettFrame() {
+		return tFrame;
+	}
+
+	public void settFrame(TankFrame tFrame) {
+		this.tFrame = tFrame;
 	}
 
 	public void paint(Graphics g) {
@@ -199,12 +216,7 @@ public class Tank {
 	 * Last_update:2020年12月17日下午2:32:44
 	 */
 	public void fire() {
-		// TODO: 子弹的计算需要优化
-		int bulletX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;// 计算子弹的x
-		int bulletY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;// 计算子弹的y
-		this.tFrame.bullets.add(new Bullet(bulletX, bulletY, this.dir, this.group,this.tFrame));// 窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
-		//播放我方坦克开火的声音
-//		if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+		this.strategy.fire(this);
 	}
 
 	/**
