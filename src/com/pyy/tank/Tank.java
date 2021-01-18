@@ -46,8 +46,21 @@ public class Tank {
 		tankRect.width=WIDTH;
 		tankRect.height=HEIGHT;
 		
-		if(this.group==Group.GOOD) strategy=new FourDirFireStrategy();
-		else strategy=new DefaultFireStrategy();
+		if(this.group==Group.GOOD) {
+			String goodFSName=(String)PropertyMgr.get("goodFS");
+			try {
+				strategy=(FireStrategy) Class.forName(goodFSName).newInstance();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			String badFSName=(String)PropertyMgr.get("badFS");
+			try {
+				strategy=(FireStrategy) Class.forName(badFSName).newInstance();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} 
 	}
 
 	public int getX() {

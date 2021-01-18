@@ -7,7 +7,7 @@ package com.pyy.tank;
  */
 public class Main {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
 		int tankCount = PropertyMgr.getInt("initTankCount");
 		
