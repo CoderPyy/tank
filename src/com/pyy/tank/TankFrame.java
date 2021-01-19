@@ -11,6 +11,12 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.pyy.tank.abstractfactory.BaseBullet;
+import com.pyy.tank.abstractfactory.BaseExplode;
+import com.pyy.tank.abstractfactory.DefaultUIFactory;
+import com.pyy.tank.abstractfactory.GameFactory;
+import com.pyy.tank.abstractfactory.ReactUIFactory;
+
 /**
  * ÃπøÀ¥∞ÃÂ¿‡
  * 
@@ -19,9 +25,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class TankFrame extends Frame {
 
 	Tank tank = new Tank(200, 500, Dir.UP,false,Group.GOOD, this);
-	List<Bullet> bullets = new CopyOnWriteArrayList<Bullet>();
-	List<Tank> enemyTanks = new CopyOnWriteArrayList<Tank>();
-	List<Explode> explodes=new CopyOnWriteArrayList<Explode>();
+	public List<BaseBullet> bullets = new CopyOnWriteArrayList<>();
+	public List<Tank> enemyTanks = new CopyOnWriteArrayList<Tank>();
+	public List<BaseExplode> explodes=new CopyOnWriteArrayList<>();
+	
+	public GameFactory gf=new ReactUIFactory();
 	
 	static final int GAME_WIDTH = 1000, GAME_HEIGHT = 800;
 
@@ -43,11 +51,11 @@ public class TankFrame extends Frame {
 	}
 	
 
-	public List<Bullet> getBullets() {
+	public List<BaseBullet> getBullets() {
 		return bullets;
 	}
 
-	public void setBullets(List<Bullet> bullets) {
+	public void setBullets(List<BaseBullet> bullets) {
 		this.bullets = bullets;
 	}
 
