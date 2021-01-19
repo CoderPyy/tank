@@ -1,9 +1,10 @@
-package com.pyy.tank;
+package com.pyy.tank.abstractfactory;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.pyy.tank.abstractfactory.BaseExplode;
+import com.pyy.tank.ResourceMgr;
+import com.pyy.tank.TankFrame;
 
 /**
   * ·½¿éµÄUI±¬Õ¨

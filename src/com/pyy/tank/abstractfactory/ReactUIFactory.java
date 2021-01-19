@@ -2,8 +2,6 @@ package com.pyy.tank.abstractfactory;
 
 import com.pyy.tank.Dir;
 import com.pyy.tank.Group;
-import com.pyy.tank.ReactBullet;
-import com.pyy.tank.ReactExplode;
 import com.pyy.tank.TankFrame;
 
 /**

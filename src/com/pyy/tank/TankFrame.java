@@ -31,7 +31,8 @@ public class TankFrame extends Frame {
 	
 	public GameFactory gf=new ReactUIFactory();
 	
-	static final int GAME_WIDTH = 1000, GAME_HEIGHT = 800;
+	public static final int GAME_WIDTH = 1000;
+	public static final int GAME_HEIGHT = 800;
 
 	public TankFrame() {
 		setSize(GAME_WIDTH, GAME_HEIGHT);

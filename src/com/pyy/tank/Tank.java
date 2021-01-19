@@ -29,7 +29,7 @@ public class Tank {
 	private Group group=Group.BAD;
 	private Random random=new Random();
 	
-	Rectangle tankRect = new Rectangle();// 坦克的矩形（单例模式）
+	public Rectangle tankRect = new Rectangle();// 坦克的矩形（单例模式）
 	
 	FireStrategy strategy;
 
