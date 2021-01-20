@@ -3,14 +3,14 @@ package com.pyy.tank;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import com.pyy.tank.facade.GameModel;
+import com.pyy.tank.facade_Mediator.GameModel;
 
 /**
  * 子弹类
  * 
  * @author PeiYY Last_update:2020年12月17日上午11:44:26
  */
-public class Bullet {
+public class Bullet extends GameObject{
 	private static final int SPEED = 10;
 
 	public static int WIDTH = ResourceMgr.bulletD.getWidth();
@@ -39,7 +39,7 @@ public class Bullet {
 		bulletRect.height = HEIGHT;
 		
 		//窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
-		gm.bullets.add(this);
+		gm.add(this);
 
 	}
 
@@ -53,7 +53,7 @@ public class Bullet {
 
 	public void paint(Graphics g) {
 		if (!this.living) {
-			this.gm.bullets.remove(this);
+			this.gm.remove(this);
 		}
 
 		switch (dir) {
@@ -109,9 +109,9 @@ public class Bullet {
 	 * 
 	 * @param enemyTank
 	 */
-	public void collideWith(Tank enemyTank) {
+	public Boolean collideWith(Tank enemyTank) {
 		if (this.group == enemyTank.getGroup())
-			return;// 如果坦克和子弹是属于一方的，那就不需要碰撞检测（默认不开启队友伤害）
+			return false;// 如果坦克和子弹是属于一方的，那就不需要碰撞检测（默认不开启队友伤害）
 
 		// TODO:用一个rect来记录子弹的位置，减少不必要的内存消耗
 //		Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// 子弹的矩形
@@ -121,8 +121,11 @@ public class Bullet {
 			enemyTank.die();
 			int eX = enemyTank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;// 计算爆炸的x
 			int eY = enemyTank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;// 计算爆炸的y
-			this.gm.explodes.add(new Explode(eX, eY, this.gm));
+			this.gm.add(new Explode(eX, eY, this.gm));
+			return true;
 		}
+		
+		return false;
 	}
 
 	/**

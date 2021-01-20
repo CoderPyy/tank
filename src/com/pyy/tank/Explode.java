@@ -2,7 +2,7 @@ package com.pyy.tank;
 
 import java.awt.Graphics;
 
-import com.pyy.tank.facade.GameModel;
+import com.pyy.tank.facade_Mediator.GameModel;
 
 /**
  *   爆炸类
@@ -10,7 +10,7 @@ import com.pyy.tank.facade.GameModel;
  * Last_update:2020年12月20日下午5:15:42
  *
  */
-public class Explode {
+public class Explode extends GameObject{
 
 	public static int WIDTH = ResourceMgr.explodes[0].getWidth();
 	public static int HEIGHT = ResourceMgr.explodes[0].getHeight();
@@ -32,7 +32,7 @@ public class Explode {
 	public void paint(Graphics g) {
 		g.drawImage(ResourceMgr.explodes[step++], x, y, null);
 		
-		if(step>=ResourceMgr.explodes.length) gm.explodes.remove(this);;
+		if(step>=ResourceMgr.explodes.length) gm.remove(this);;
 	}
 	
 

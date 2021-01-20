@@ -11,7 +11,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.pyy.tank.facade.GameModel;
+import com.pyy.tank.facade_Mediator.GameModel;
 
 /**
  * ÃπøÀ¥∞ÃÂ¿‡

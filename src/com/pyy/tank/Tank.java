@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
-import com.pyy.tank.facade.GameModel;
+import com.pyy.tank.facade_Mediator.GameModel;
 import com.pyy.tank.strategy.DefaultFireStrategy;
 import com.pyy.tank.strategy.FireStrategy;
 import com.pyy.tank.strategy.FourDirFireStrategy;
@@ -14,7 +14,7 @@ import com.pyy.tank.strategy.FourDirFireStrategy;
  * 
  * @author PeiYY Last_update:2020年12月17日上午11:47:29
  */
-public class Tank {
+public class Tank extends GameObject{
 
 	private int x, y;
 	private Dir dir = Dir.UP;
@@ -30,7 +30,7 @@ public class Tank {
 	private Group group=Group.BAD;
 	private Random random=new Random();
 	
-	Rectangle tankRect = new Rectangle();// 坦克的矩形（单例模式）
+	public Rectangle tankRect = new Rectangle();// 坦克的矩形（单例模式）
 	
 	FireStrategy strategy;
 	
@@ -117,7 +117,7 @@ public class Tank {
 
 	public void paint(Graphics g) {
 		if(!this.living) {
-			this.gm.enemyTanks.remove(this);
+			this.gm.remove(this);
 		}
 		// 根据坦克的方向，换坦克的图片
 		if(this.group==Group.BAD) {
@@ -235,6 +235,10 @@ public class Tank {
 	 */
 	public void die() {
 		this.setLiving(false);
+	}
+
+	public void stop() {
+		this.moving=false;
 	}
 
 }

@@ -6,3 +6,5 @@ gameHeight=860
 #FireStrategy
 goodFS=com.pyy.tank.strategy.FourDirFireStrategy
 badFS=com.pyy.tank.strategy.DefaultFireStrategy
+#colliders
+colliders=com.pyy.tank.collider.BulletTankCollider,com.pyy.tank.collider.TankTankCollider
