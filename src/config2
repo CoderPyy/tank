@@ -1,0 +1,8 @@
+initTankCount=100
+tankSpeed=6
+bulletSpeed=12
+gameWidth=720
+gameHeight=860
+#FireStrategy
+goodFS=com.pyy.tank.strategy.FourDirFireStrategy
+badFS=com.pyy.tank.strategy.DefaultFireStrategy

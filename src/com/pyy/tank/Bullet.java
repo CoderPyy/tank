@@ -3,6 +3,8 @@ package com.pyy.tank;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import com.pyy.tank.facade.GameModel;
+
 /**
  * 子弹类
  * 
@@ -17,19 +19,19 @@ public class Bullet {
 	private int x, y;
 	private Dir dir;
 
-	private TankFrame tFrame = null;// 窗体对象的引用
+	private GameModel gm = null;// 窗体对象的引用
 	private boolean living = true;// 子弹是否超出边界
 
 	private Group group = Group.BAD;
 
 	private Rectangle bulletRect = new Rectangle();// 子弹的矩形（单例模式）
 
-	public Bullet(int x, int y, Dir dir, Group group, TankFrame tFrame) {
+	public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.tFrame = tFrame;
+		this.gm = gm;
 
 		bulletRect.x = this.x;
 		bulletRect.y = this.y;
@@ -37,7 +39,7 @@ public class Bullet {
 		bulletRect.height = HEIGHT;
 		
 		//窗体对象里面new坦克，每new一个坦克，然后开火，就引用窗体对象里面的子弹
-		tFrame.bullets.add(this);
+		gm.bullets.add(this);
 
 	}
 
@@ -51,7 +53,7 @@ public class Bullet {
 
 	public void paint(Graphics g) {
 		if (!this.living) {
-			this.tFrame.bullets.remove(this);
+			this.gm.bullets.remove(this);
 		}
 
 		switch (dir) {
@@ -119,7 +121,7 @@ public class Bullet {
 			enemyTank.die();
 			int eX = enemyTank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;// 计算爆炸的x
 			int eY = enemyTank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;// 计算爆炸的y
-			this.tFrame.explodes.add(new Explode(eX, eY, tFrame));
+			this.gm.explodes.add(new Explode(eX, eY, this.gm));
 		}
 	}
 

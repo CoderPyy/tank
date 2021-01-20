@@ -15,7 +15,7 @@ public class PropertyMgr {
 	
 	static {
 		try {
-			props.load(PropertyMgr.class.getClassLoader().getResourceAsStream("config"));
+			props.load(PropertyMgr.class.getClassLoader().getResourceAsStream("config2"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

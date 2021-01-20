@@ -20,7 +20,7 @@ public class FourDirFireStrategy implements FireStrategy {
 		int bulletY = t.getY() + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;// 计算子弹的y
 		Dir[] dirs = Dir.values();
 		for (Dir dir : dirs) {
-			new Bullet(bulletX, bulletY, dir, t.getGroup(), t.gettFrame());
+			new Bullet(bulletX, bulletY, dir, t.getGroup(), t.gm);
 		}
 		// 播放我方坦克开火的声音
 		if (t.getGroup() == Group.GOOD)

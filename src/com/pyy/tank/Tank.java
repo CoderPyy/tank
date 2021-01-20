@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
+import com.pyy.tank.facade.GameModel;
 import com.pyy.tank.strategy.DefaultFireStrategy;
 import com.pyy.tank.strategy.FireStrategy;
 import com.pyy.tank.strategy.FourDirFireStrategy;
@@ -23,7 +24,7 @@ public class Tank {
 	public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
 	private Boolean moving;
-	private TankFrame tFrame;// 坦克类里面引用坦克窗体对象
+//	private TankFrame tFrame;// 坦克类里面引用坦克窗体对象
 	private Boolean living=true;
 	
 	private Group group=Group.BAD;
@@ -32,14 +33,16 @@ public class Tank {
 	Rectangle tankRect = new Rectangle();// 坦克的矩形（单例模式）
 	
 	FireStrategy strategy;
+	
+	public GameModel gm;
 
-	public Tank(int x, int y, Dir dir,Boolean moving, Group group,TankFrame tFrame) {
+	public Tank(int x, int y, Dir dir,Boolean moving, Group group,GameModel gm) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.moving=moving;
 		this.group=group;
-		this.tFrame = tFrame;
+		this.gm = gm;
 		
 		tankRect.x=this.x;
 		tankRect.y=this.y;
@@ -110,18 +113,11 @@ public class Tank {
 	public void setGroup(Group group) {
 		this.group = group;
 	}
-	
-	public TankFrame gettFrame() {
-		return tFrame;
-	}
 
-	public void settFrame(TankFrame tFrame) {
-		this.tFrame = tFrame;
-	}
 
 	public void paint(Graphics g) {
 		if(!this.living) {
-			this.tFrame.enemyTanks.remove(this);
+			this.gm.enemyTanks.remove(this);
 		}
 		// 根据坦克的方向，换坦克的图片
 		if(this.group==Group.BAD) {

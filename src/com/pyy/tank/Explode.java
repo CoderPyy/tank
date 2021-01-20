@@ -2,6 +2,8 @@ package com.pyy.tank;
 
 import java.awt.Graphics;
 
+import com.pyy.tank.facade.GameModel;
+
 /**
  *   爆炸类
  * @author PeiYY
@@ -15,14 +17,14 @@ public class Explode {
 
 	private int x, y;
 
-	private TankFrame tFrame = null;// 窗体对象的引用
+	private GameModel gm = null;// 窗体对象的引用
 	
 	private int step=0;
 	
-	public Explode(int x, int y,TankFrame tFrame) {
+	public Explode(int x, int y,GameModel gm) {
 		this.x = x;
 		this.y = y;
-		this.tFrame = tFrame;
+		this.gm = gm;
 		
 //		new Audio("audio/explode.wav").play();
 	}
@@ -30,7 +32,7 @@ public class Explode {
 	public void paint(Graphics g) {
 		g.drawImage(ResourceMgr.explodes[step++], x, y, null);
 		
-		if(step>=ResourceMgr.explodes.length) tFrame.explodes.remove(this);;
+		if(step>=ResourceMgr.explodes.length) gm.explodes.remove(this);;
 	}
 	
 
