@@ -24,8 +24,8 @@ public class Explode extends GameObject{
 	public Explode(int x, int y,GameModel gm) {
 		this.x = x;
 		this.y = y;
-		this.gm = gm;
-		
+		this.gm=gm;
+//		GameModel.getInstance().add(this);
 //		new Audio("audio/explode.wav").play();
 	}
 	

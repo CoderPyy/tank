@@ -1,4 +1,4 @@
-initTankCount=100
+initTankCount=10
 tankSpeed=6
 bulletSpeed=12
 gameWidth=720

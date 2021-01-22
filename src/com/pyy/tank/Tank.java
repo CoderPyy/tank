@@ -17,6 +17,7 @@ import com.pyy.tank.strategy.FourDirFireStrategy;
 public class Tank extends GameObject{
 
 	private int x, y;
+	private int oldX,oldY;//记录之前移动的位置
 	private Dir dir = Dir.UP;
 	private static final int SPEED = 5;
 
@@ -33,16 +34,15 @@ public class Tank extends GameObject{
 	public Rectangle tankRect = new Rectangle();// 坦克的矩形（单例模式）
 	
 	FireStrategy strategy;
-	
 	public GameModel gm;
-
+	
 	public Tank(int x, int y, Dir dir,Boolean moving, Group group,GameModel gm) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.moving=moving;
 		this.group=group;
-		this.gm = gm;
+		this.gm=gm;
 		
 		tankRect.x=this.x;
 		tankRect.y=this.y;
@@ -63,7 +63,9 @@ public class Tank extends GameObject{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} 
+		}
+		
+//		GameModel.getInstance().add(this);
 	}
 
 	public int getX() {
@@ -117,7 +119,7 @@ public class Tank extends GameObject{
 
 	public void paint(Graphics g) {
 		if(!this.living) {
-			this.gm.remove(this);
+			gm.remove(this);
 		}
 		// 根据坦克的方向，换坦克的图片
 		if(this.group==Group.BAD) {
@@ -161,8 +163,18 @@ public class Tank extends GameObject{
 		
 		move();
 	}
+	
+	public void back() {
+		x=oldX;
+		y=oldY;
+	}
 
 	private void move() {
+		
+		//记录之前移动的位置
+		oldX=x;
+		oldY=y;
+		
 		if (!this.moving)
 			return;
 		switch (dir) {

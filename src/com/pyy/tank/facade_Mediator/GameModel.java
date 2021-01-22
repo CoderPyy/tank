@@ -13,6 +13,7 @@ import com.pyy.tank.GameObject;
 import com.pyy.tank.Group;
 import com.pyy.tank.PropertyMgr;
 import com.pyy.tank.Tank;
+import com.pyy.tank.Wall;
 import com.pyy.tank.collider.BulletTankCollider;
 import com.pyy.tank.collider.Collider;
 import com.pyy.tank.collider.ColliderChain;
@@ -25,7 +26,14 @@ import com.pyy.tank.collider.TankTankCollider;
  */
 public class GameModel {
 	
-	Tank tank = new Tank(200, 500, Dir.UP,false,Group.GOOD, this);
+	/**单例设计模式**/
+	/*
+	 * private static final GameModel INSTANCE=new GameModel();
+	 * 
+	 * public static GameModel getInstance() { return INSTANCE; }
+	 */
+	
+	Tank myTank;
 	
 //	public List<Bullet> bullets = new CopyOnWriteArrayList<Bullet>();
 //	public List<Tank> enemyTanks = new CopyOnWriteArrayList<Tank>();
@@ -39,12 +47,20 @@ public class GameModel {
 	public List<GameObject> objects=new ArrayList<>();
 
 	public GameModel() {
+		//初始化主战坦克
+		myTank = new Tank(200, 500, Dir.UP,false,Group.GOOD,this);
 		int tankCount = PropertyMgr.getInt("initTankCount");
 
 		// 初始化敌方坦克
 		for (int i = 0; i < tankCount; i++) {
-			add(new Tank(50 + i * 80, 200, Dir.DOWN,true,Group.BAD, this));
+			add(new Tank(50 + i * 80, 200, Dir.DOWN,true,Group.BAD,this));
 		}
+		
+		//初始化墙
+		add(new Wall(150, 150, 200, 50));
+		add(new Wall(550, 150, 200, 50));
+		add(new Wall(300, 300, 50, 200));
+		add(new Wall(550, 300, 50, 200));
 	}
 	
 	public void add(GameObject go) {
@@ -64,7 +80,7 @@ public class GameModel {
 		 * this.explodes.size(), 10, 100);
 		 */
 		g.setColor(color);
-		tank.paint(g);
+		myTank.paint(g);
 		
 		for(int i=0;i<objects.size();i++) {
 			objects.get(i).paint(g);
@@ -96,9 +112,7 @@ public class GameModel {
 	}
 
 	public Tank getMaintank() {
-		// TODO Auto-generated method stub
-		
-		return tank;
+		return myTank;
 		
 	}
 	

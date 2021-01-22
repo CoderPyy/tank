@@ -24,14 +24,14 @@ public class Bullet extends GameObject{
 
 	private Group group = Group.BAD;
 
-	private Rectangle bulletRect = new Rectangle();// 子弹的矩形（单例模式）
+	public Rectangle bulletRect = new Rectangle();// 子弹的矩形（单例模式）
 
-	public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
+	public Bullet(int x, int y, Dir dir, Group group,GameModel gm) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.group = group;
-		this.gm = gm;
+		this.gm=gm;
 
 		bulletRect.x = this.x;
 		bulletRect.y = this.y;
@@ -53,7 +53,7 @@ public class Bullet extends GameObject{
 
 	public void paint(Graphics g) {
 		if (!this.living) {
-			this.gm.remove(this);
+			gm.remove(this);
 		}
 
 		switch (dir) {
@@ -103,35 +103,12 @@ public class Bullet extends GameObject{
 		}
 
 	}
-
-	/**
-	 * 子弹和敌方坦克碰撞检测 Last_update:2020年12月20日下午2:46:12
-	 * 
-	 * @param enemyTank
-	 */
-	public Boolean collideWith(Tank enemyTank) {
-		if (this.group == enemyTank.getGroup())
-			return false;// 如果坦克和子弹是属于一方的，那就不需要碰撞检测（默认不开启队友伤害）
-
-		// TODO:用一个rect来记录子弹的位置，减少不必要的内存消耗
-//		Rectangle bulletRect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// 子弹的矩形
-//		Rectangle tankRect = new Rectangle(enemyTank.getX(), enemyTank.getY(), enemyTank.WIDTH, enemyTank.HEIGHT);// 坦克的矩形
-		if (bulletRect.intersects(enemyTank.tankRect)) {
-			this.die();
-			enemyTank.die();
-			int eX = enemyTank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;// 计算爆炸的x
-			int eY = enemyTank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;// 计算爆炸的y
-			this.gm.add(new Explode(eX, eY, this.gm));
-			return true;
-		}
-		
-		return false;
-	}
+	
 
 	/**
 	 * 子弹死亡 Last_update:2020年12月20日下午3:34:21
 	 */
-	private void die() {
+	public void die() {
 		this.living = false;
 	}
 
