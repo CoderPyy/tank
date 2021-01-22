@@ -16,7 +16,6 @@ public class Bullet extends GameObject{
 	public static int WIDTH = ResourceMgr.bulletD.getWidth();
 	public static int HEIGHT = ResourceMgr.bulletD.getHeight();
 
-	private int x, y;
 	private Dir dir;
 
 	private GameModel gm = null;// 窗体对象的引用
@@ -110,6 +109,16 @@ public class Bullet extends GameObject{
 	 */
 	public void die() {
 		this.living = false;
+	}
+
+	@Override
+	public int getWitdh() {
+		return WIDTH;
+	}
+
+	@Override
+	public int getHeight() {
+		return HEIGHT;
 	}
 
 }

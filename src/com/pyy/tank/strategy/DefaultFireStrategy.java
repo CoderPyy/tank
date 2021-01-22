@@ -4,6 +4,8 @@ import com.pyy.tank.Audio;
 import com.pyy.tank.Bullet;
 import com.pyy.tank.Group;
 import com.pyy.tank.Tank;
+import com.pyy.tank.decorator.RectDecorator;
+import com.pyy.tank.decorator.TailDecorator;
 
 /**
  * 默认射击 策略
@@ -17,7 +19,8 @@ public class DefaultFireStrategy implements FireStrategy {
 		// TODO: 子弹的计算需要优化
 		int bulletX = t.getX() + Tank.WIDTH / 2 - Bullet.WIDTH / 2;// 计算子弹的x
 		int bulletY = t.getY() + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;// 计算子弹的y
-		new Bullet(bulletX, bulletY, t.getDir(), t.getGroup(),t.gm);
+//		new Bullet(bulletX, bulletY, t.getDir(), t.getGroup(),t.gm);
+		t.gm.add(new TailDecorator(new RectDecorator(new Bullet(bulletX, bulletY, t.getDir(), t.getGroup(),t.gm))));
 		// 播放我方坦克开火的声音
 		if (t.getGroup() == Group.GOOD)
 			new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();

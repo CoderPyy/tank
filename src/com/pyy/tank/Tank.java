@@ -16,7 +16,6 @@ import com.pyy.tank.strategy.FourDirFireStrategy;
  */
 public class Tank extends GameObject{
 
-	private int x, y;
 	private int oldX,oldY;//记录之前移动的位置
 	private Dir dir = Dir.UP;
 	private static final int SPEED = 5;
@@ -251,6 +250,16 @@ public class Tank extends GameObject{
 
 	public void stop() {
 		this.moving=false;
+	}
+
+	@Override
+	public int getWitdh() {
+		return WIDTH;
+	}
+
+	@Override
+	public int getHeight() {
+		return HEIGHT;
 	}
 
 }
