@@ -92,7 +92,8 @@ public class TankFrame extends Frame {
 				System.exit(0);
 				break;
 			case KeyEvent.VK_CONTROL:
-				gm.getMaintank().fire();
+//				gm.getMaintank().fire();
+				gm.getMaintank().handleFireKey();
 				break;
 			default:
 				break;

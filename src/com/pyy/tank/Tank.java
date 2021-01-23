@@ -2,9 +2,15 @@ package com.pyy.tank;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import com.pyy.tank.facade_Mediator.GameModel;
+import com.pyy.tank.observer.TankFireEvent;
+import com.pyy.tank.observer.TankFireHandler;
+import com.pyy.tank.observer.TankFireObserver;
 import com.pyy.tank.strategy.DefaultFireStrategy;
 import com.pyy.tank.strategy.FireStrategy;
 import com.pyy.tank.strategy.FourDirFireStrategy;
@@ -260,6 +266,20 @@ public class Tank extends GameObject{
 	@Override
 	public int getHeight() {
 		return HEIGHT;
+	}
+	
+	
+	private List<TankFireObserver> fireObservers=Arrays.asList(new TankFireHandler());
+
+	/**
+	 * 处理开火按键
+	 * Last_update:2021年1月23日下午8:23:09
+	 */
+	public void handleFireKey() {
+		TankFireEvent event=new TankFireEvent(this);
+		for(TankFireObserver observer:fireObservers) {
+			observer.actionOnFire(event);
+		}
 	}
 
 }
