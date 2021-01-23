@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import com.pyy.tank.GameObject;
 
 /**
-  *   类说明
+  *   尾巴装饰器
  * @author PeiYY
  * Last_update:2021年1月22日下午11:50:33
  */
