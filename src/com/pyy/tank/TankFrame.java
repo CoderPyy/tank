@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -18,7 +19,7 @@ import com.pyy.tank.facade_Mediator.GameModel;
  * 
  * @author PeiYY Last_update:2020年12月17日上午11:44:49
  */
-public class TankFrame extends Frame {
+public class TankFrame extends Frame implements Serializable{
 
 	GameModel gm=new GameModel();
 	
@@ -94,6 +95,12 @@ public class TankFrame extends Frame {
 			case KeyEvent.VK_CONTROL:
 //				gm.getMaintank().fire();
 				gm.getMaintank().handleFireKey();
+				break;
+			case KeyEvent.VK_S:
+				gm.save();
+				break;
+			case KeyEvent.VK_L:
+				gm.load();
 				break;
 			default:
 				break;

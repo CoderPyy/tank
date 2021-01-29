@@ -2,6 +2,13 @@ package com.pyy.tank.facade_Mediator;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -24,7 +31,7 @@ import com.pyy.tank.collider.TankTankCollider;
  * @author PeiYY
  * Last_update:2021年1月20日下午8:12:14
  */
-public class GameModel {
+public class GameModel implements Serializable{
 	
 	/**单例设计模式**/
 	/*
@@ -114,6 +121,50 @@ public class GameModel {
 	public Tank getMaintank() {
 		return myTank;
 		
+	}
+	
+	public void save() {
+		File f=new File("w:/tank.data");
+		ObjectOutputStream oos=null;
+		try {
+			oos=new ObjectOutputStream(new FileOutputStream(f));
+			oos.writeObject(myTank);
+			oos.writeObject(objects);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(oos!=null) {
+				try {
+					oos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void load() {
+		File f=new File("w:/tank.data");
+		ObjectInputStream ois=null;
+		try {
+			ois=new ObjectInputStream(new FileInputStream(f));
+			try {
+				myTank=(Tank)ois.readObject();
+				objects=(List)ois.readObject();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(ois!=null) {
+				try {
+					ois.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 }

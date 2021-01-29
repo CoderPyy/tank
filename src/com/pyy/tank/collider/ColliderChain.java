@@ -1,5 +1,6 @@
 package com.pyy.tank.collider;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import com.pyy.tank.GameObject;
  * @author PeiYY
  * Last_update:2021年1月20日下午11:00:45
  */
-public class ColliderChain implements Collider{
+public class ColliderChain implements Collider,Serializable{
 	
 	private List<Collider> colliders=new LinkedList<>();
 	

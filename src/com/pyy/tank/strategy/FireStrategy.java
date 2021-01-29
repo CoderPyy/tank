@@ -1,5 +1,7 @@
 package com.pyy.tank.strategy;
 
+import java.io.Serializable;
+
 import com.pyy.tank.Tank;
 
 /**
@@ -10,6 +12,6 @@ import com.pyy.tank.Tank;
  * @author PeiYY
  * Last_update:2020年12月27日下午6:19:55
  */
-public interface FireStrategy {
+public interface FireStrategy extends Serializable{
 	void fire(Tank t);
 }
